@@ -13,4 +13,6 @@ return [
     'username' => 'your-user',
     'password' => 'your-password',
     'provider_key' => 'your-provider-key',
+    'lcode' => 'your-lcode',
+    'cache_token' => true
 ];

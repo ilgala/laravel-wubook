@@ -17,97 +17,126 @@ use fXmlRpc\Serializer\NativeSerializer;
 use Illuminate\Contracts\Config\Repository;
 use IlGala\LaravelWubook\Exceptions\WuBookException;
 use IlGala\LaravelWubook\Api\WuBookAuth;
+use IlGala\LaravelWubook\Api\WuBookAvailability;
+use IlGala\LaravelWubook\Api\WuBookRooms;
 
-class WuBook implements WuBookInterface
+/**
+ * This is the WuBook manager class.
+ *
+ * @author Filippo Galante <filippo.galante@b-ground.com>
+ */
+class WuBook
 {
+
+    /**
+     * @var string
+     */
+    const ENDPOINT = 'https://wubook.net/xrws/';
 
     /**
      * @var array
      */
-    private $credentials;
+    private $config;
 
     /**
-     * @var PhpXmlRpc\Client
+     * @var Illuminate\Cache\Repository
      */
-    private $client;
+    private $cache;
 
     /**
-     * IlGala\WuBook\Api\WuBookAuth
+     * Create a new WuBook Instance.
+     *
+     * @param Repository $config
+     * @throws WuBookException
      */
-    private $auth;
-
-    /**
-     * Create a new WuBook Instance
-     */
-    public function __construct(Repository $config, Client $client = null)
+    public function __construct(Repository $config)
     {
         // Setup credentials
-        $this->credentials = array_only($config->get('wubook'), ['username', 'password', 'provider_key']);
+        $this->config = array_only($config->get('wubook'), ['username', 'password', 'provider_key', 'lcode']);
 
         // Credentials check
-        if (!array_key_exists('username', $this->credentials) || !array_key_exists('password', $this->credentials) || !array_key_exists('provider_key', $this->credentials)) {
+        if (!array_key_exists('username', $this->config) || !array_key_exists('password', $this->config) || !array_key_exists('provider_key', $this->config) || !array_key_exists('lcode', $this->lcode)) {
             throw new WuBookException('Credentials are required!');
         }
 
-        // Setup client
-        if (!$client) {
-            $client = new Client(self::ENDPOINT, null, new NativeParser(), new NativeSerializer());
+        if (!array_key_exists('cache_token', $this->config)) {
+            $this->config['cache_token'] = false;
         }
 
-        $this->client = $client;
+        // Utilities
+        $this->cache = app()['cache'];
     }
 
+    /**
+     * Auth API
+     *
+     * @return WuBookAuth
+     */
     public function auth()
     {
-        return new WuBookAuth($this->credentials, $this->client);
+        // Setup client
+        $client = new Client(self::ENDPOINT, null, new NativeParser(), new NativeSerializer());
+
+        return new WuBookAuth($this->config, $this->cache, $client);
     }
 
-    public function availability()
+    public function availability($token = null)
+    {
+        // Setup client
+        $client = new Client(self::ENDPOINT, null, new NativeParser(), new NativeSerializer());
+
+        return new WuBookAvailability($this->config, $this->cache, $client, $token);
+    }
+
+    public function cancellation_policies($token = null)
     {
 
     }
 
-    public function cancellation_policies()
+    public function channel_manager($token = null)
     {
 
     }
 
-    public function channel_manager()
+    public function corporate_functions($token = null)
     {
 
     }
 
-    public function corporate_functions()
+    public function extras($token = null)
     {
 
     }
 
-    public function extras()
+    public function prices($token = null)
     {
 
     }
 
-    public function prices()
+    public function reservations($token = null)
     {
 
     }
 
-    public function reservations()
+    public function restrictions($token = null)
     {
 
     }
 
-    public function restrictions()
+    /**
+     * Rooms API
+     *
+     * @return WuBookAuth
+     */
+    public function rooms($token = null)
     {
+        // Setup client
+        $client = new Client(self::ENDPOINT, null, new NativeParser(), new NativeSerializer());
 
+        return new WuBookRooms($this->config, $this->cache, $client, $token);
     }
 
-    public function rooms()
-    {
-
-    }
-
-    public function transactions()
+    public function transactions($token = null)
     {
 
     }

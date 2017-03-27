@@ -14,15 +14,25 @@ namespace IlGala\LaravelWubook\Api;
 use fXmlRpc\Client;
 use fXmlRpc\Exception\AbstractTransportException;
 use IlGala\WuBook\Exceptions\WuBookException;
+use Carbon\Carbon;
 
+/**
+ * This is the WuBook authentication class.
+ *
+ * @author Filippo Galante <filippo.galante@b-ground.com>
+ */
 class WuBookAuth
 {
 
     /**
-     *
      * @var array
      */
-    private $credentials;
+    private $config;
+
+    /**
+     * @var Illuminate\Cache\Repository
+     */
+    private $cache;
 
     /**
      * @var fXmlRpc\Client
@@ -30,31 +40,34 @@ class WuBookAuth
     private $client;
 
     /**
-     * Create a new WuBookAuth Instance
+     * Create a new WuBookAuth Instance.
      *
-     * @param type $credentials
-     * @param \fXmlRpc\Client $client
+     * @param array $config
+     * @param \Illuminate\Cache\Repository $cache
+     * @param Client $client
      */
-    public function __construct($credentials, Client $client)
+    public function __construct(array $config, Illuminate\Cache\Repository $cache, Client $client)
     {
-        $this->credentials = $credentials;
+        $this->config = $config;
         $this->client = $client;
+        $this->cache = $cache;
     }
 
     /**
-     * Acquire token.
+     * Acquire token. If cache_token option is set to true, the package will automatically save it into application cache
      *
      * http://tdocs.wubook.net/wired/auth.html#acquiring-and-releasing-a-token
      *
-     * @return String token
+     *
+     * @return string token
      */
     public function acquire_token()
     {
         // Setup request data
         $data = [
-            $this->credentials['username'],
-            $this->credentials['password'],
-            $this->credentials['provider_key']
+            $this->config['username'],
+            $this->config['password'],
+            $this->config['provider_key']
         ];
 
         try {
@@ -64,7 +77,19 @@ class WuBookAuth
             // Check response
             if ($response[0] == 0) {
                 // Success
-                return $response[1];
+                $token = $response[1];
+
+                // Setup cache token expiration and max operations
+                $expires_at = Carbon::now()->addSeconds(3600);
+
+                // Setup cache
+                if ($this->config['cache_token']) {
+                    $this->cache->put('wubook.token', $token, $expires_at);
+                }
+
+                $this->cache->put('wubook.token.ops', 0, $expires_at);
+
+                return $token;
             } else {
                 // Error
                 throw new WuBookException($response[1], $response[0]);
@@ -78,6 +103,8 @@ class WuBookAuth
      * Token release.
      *
      * http://tdocs.wubook.net/wired/auth.html#acquiring-and-releasing-a-token
+     *
+     * @param string $token
      */
     public function release_token($token)
     {
@@ -86,9 +113,21 @@ class WuBookAuth
             $token
         ];
 
-        // Retrieve response
         try {
-            return $this->client->call('release_token', $data);
+            // Retrieve response
+            $response = $this->client->call('release_token', $data);
+
+            // Check response
+            if ($response[0] == 0) {
+                // Empty cache
+                $this->cache->forget('wubook.token');
+                $this->cache->forget('wubook.token.ops');
+
+                return true;
+            } else {
+                // Error
+                throw new WuBookException($response[1], $response[0]);
+            }
         } catch (AbstractTransportException $error) {
             throw new WuBookException($error->getMessage(), $error->getCode(), $error);
         }
@@ -99,22 +138,33 @@ class WuBookAuth
      * If (and only if) the ReturnCode is zero, it means that the token is valid.
      * In that case, the return value of the function is an integer and represents the number of times that this token has been used.
      *
+     * The request_new param will not be considered if token is valid.
+     *
      * http://tdocs.wubook.net/wired/auth.html#other-token-tools
      *
      * @param string $token
-     * @return bool
+     * @param boolean $request_new
+     * @return int|string
      * @throws IlGala\WuBook\Exceptions\WuBookException
      */
-    public function is_token_valid($token)
+    public function is_token_valid($token, $request_new = false)
     {
         // Setup request data
         $data = [
             $token
         ];
 
-        // Retrieve response
         try {
-            return $this->client->call('is_token_valid', $data);
+            // Retrieve response
+            $response = $this->client->call('is_token_valid', $data);
+
+            if ($response[0] == 0) {
+                return $response[1];
+            } else if ($request_new) {
+                return $this->acquire_token();
+            } else {
+                return false;
+            }
         } catch (AbstractTransportException $error) {
             throw new WuBookException($error->getMessage(), $error->getCode(), $error);
         }
@@ -131,16 +181,32 @@ class WuBookAuth
      * @return mixed
      * @throws IlGala\WuBook\Exceptions\WuBookException
      */
-    public function provider_info($token)
+    public function provider_info($token = null)
     {
+        // Check token
+        if (empty($token)) {
+            $token = $this->cache->get('wubook.token');
+
+            if (empty($token)) {
+                $token = $this->acquire_token();
+            }
+        }
+
         // Setup request data
         $data = [
             $token
         ];
 
-        // Retrieve response
         try {
-            return $this->client->call('provider_info', $data);
+            // Retrieve response
+            $response = $this->client->call('provider_info', $data);
+
+            if ($response[0] == 0) {
+                return $response[1];
+            } else {
+                // Error
+                throw new WuBookException($response[1], $response[0]);
+            }
         } catch (AbstractTransportException $error) {
             throw new WuBookException($error->getMessage(), $error->getCode(), $error);
         }
