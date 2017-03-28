@@ -5,6 +5,7 @@ Laravel WuBook was created by, and is maintained by [Filippo Galante](https://gi
 
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![Software License][ico-license]](LICENSE.md)
+[![StyleCI][ico-style]](link-style)
 [![Build Status][ico-travis]][link-travis]
 [![Coverage Status][ico-scrutinizer]][link-scrutinizer]
 [![Quality Score][ico-code-quality]][link-code-quality]
