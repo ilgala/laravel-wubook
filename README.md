@@ -179,11 +179,11 @@ WuBook::rooms()->fetch_rooms(1)                 // See http://tdocs.wubook.net/w
     0 => [
         id => 123,
         name => 'room',
-        shortname: 'ro',
-        occupancy: 2,
-        men: 2,
-        children: 0,
-        subroom: 0,
+        shortname => 'ro',
+        occupancy => 2,
+        men => 2,
+        children => 0,
+        subroom => 0,
         // ...
     ],
     1 => [
