@@ -1,4 +1,4 @@
-# laravel WuBook
+# Laravel WuBook
 
 
 Laravel WuBook was created by, and is maintained by [Filippo Galante](https://github.com/ilgala), and is a [WuBook Wired API](http://tdocs.wubook.net/wired.html) bridge for [Laravel 5](http://laravel.com). Feel free to check out the [change log](CHANGELOG.md), [releases](https://github.com/ilgala/laravel-wubook/releases), [license](LICENSE), and [contribution guidelines](CONTRIBUTING.md). In order to use the API you have to request a provider key by sending an E-Mail at devel@wubook.net, in order to connect your WuBook account, and you'll be free to try all its features. 
