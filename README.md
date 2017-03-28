@@ -231,14 +231,14 @@ Laravel WuBook is licensed under [The MIT License (MIT)](LICENSE).
 
 [ico-version]: https://img.shields.io/packagist/v/ilgala/laravel-wubook.svg?style=flat-square
 [ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
-[ico-style]: https://styleci.io/repos/78115500/shield?branch=master
+[ico-style]: https://styleci.io/repos/86339392/shield?branch=master
 [ico-travis]: https://img.shields.io/travis/ilgala/laravel-wubook/master.svg?style=flat-square
 [ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/ilgala/laravel-wubook.svg?style=flat-square
 [ico-code-quality]: https://img.shields.io/scrutinizer/g/ilgala/laravel-wubook.svg?style=flat-square
 [ico-downloads]: https://img.shields.io/packagist/dt/ilgala/laravel-wubook.svg?style=flat-square
 
 [link-packagist]: https://packagist.org/packages/ilgala/laravel-wubook
-[link-style]: https://styleci.io/repos/78115500
+[link-style]: https://styleci.io/repos/86339392
 [link-travis]: https://travis-ci.org/ilgala/laravel-wubook
 [link-scrutinizer]: https://scrutinizer-ci.com/g/ilgala/laravel-wubook/code-structure
 [link-code-quality]: https://scrutinizer-ci.com/g/ilgala/laravel-wubook
