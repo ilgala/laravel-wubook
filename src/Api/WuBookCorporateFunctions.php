@@ -188,5 +188,4 @@ class WuBookCorporateFunctions extends WuBookApi
     {
         return $this->call_method($this->token, 'corporate_balance_details', [$transactionId], ['token' => $this->get_token($this->token)]);
     }
-
 }

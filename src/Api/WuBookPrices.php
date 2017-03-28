@@ -179,5 +179,4 @@ class WuBookPrices extends WuBookApi
     {
         return $this->call_method($this->token, 'delete_periods', [$id, $periods]);
     }
-
 }

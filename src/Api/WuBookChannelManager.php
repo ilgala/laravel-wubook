@@ -348,5 +348,4 @@ class WuBookChannelManager extends WuBookApi
     {
         return $this->call_method($this->token, 'last_room_channels', [$up_channels]);
     }
-
 }

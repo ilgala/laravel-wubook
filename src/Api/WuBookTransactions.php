@@ -56,5 +56,4 @@ class WuBookTransactions extends WuBookApi
     {
         return $this->call_method($this->token, 'balance_details', [$id]);
     }
-
 }

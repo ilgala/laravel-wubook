@@ -232,7 +232,7 @@ class WuBookManager
      *
      * @return string
      */
-    function get_username()
+    public function get_username()
     {
         return $this->username;
     }
@@ -242,7 +242,7 @@ class WuBookManager
      *
      * @return string
      */
-    function get_password()
+    public function get_password()
     {
         return $this->password;
     }
@@ -252,7 +252,7 @@ class WuBookManager
      *
      * @return string
      */
-    function get_provider_key()
+    public function get_provider_key()
     {
         return $this->provider_key;
     }
@@ -262,9 +262,8 @@ class WuBookManager
      *
      * @return PhpXmlRpc\Client
      */
-    function get_client()
+    public function get_client()
     {
         return $this->client;
     }
-
 }
