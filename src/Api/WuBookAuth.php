@@ -159,7 +159,7 @@ class WuBookAuth
 
             if ($response[0] == 0) {
                 return $response[1];
-            } else if ($request_new) {
+            } elseif ($request_new) {
                 return $this->acquire_token();
             } else {
                 return false;
@@ -210,5 +210,4 @@ class WuBookAuth
             throw new WuBookException($error->getMessage(), $error->getCode(), $error);
         }
     }
-
 }

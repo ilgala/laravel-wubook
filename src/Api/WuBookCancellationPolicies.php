@@ -104,5 +104,4 @@ class WuBookCancellationPolicies extends WuBookApi
     {
         return $this->call_method($this->token, 'set_policy_calendar', [$id, $dfrom, $dto]);
     }
-
 }

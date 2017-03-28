@@ -94,7 +94,7 @@ abstract class WuBookApi
         if (is_int($response)) {
             // If response is integer => valid token
             return $token;
-        } else if (is_string($response)) {
+        } elseif (is_string($response)) {
             // If response is string => new token
             return $response;
         } else {
@@ -146,5 +146,4 @@ abstract class WuBookApi
             }
         }
     }
-
 }

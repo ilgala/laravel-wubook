@@ -127,5 +127,4 @@ class WuBookExtras extends WuBookApi
     {
         return $this->call_method($this->token, 'del_soffer', [$id]);
     }
-
 }

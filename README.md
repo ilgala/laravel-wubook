@@ -1,10 +1,11 @@
-# laravel WuBook
+# Laravel WuBook
 
 
 Laravel WuBook was created by, and is maintained by [Filippo Galante](https://github.com/ilgala), and is a [WuBook Wired API](http://tdocs.wubook.net/wired.html) bridge for [Laravel 5](http://laravel.com). Feel free to check out the [change log](CHANGELOG.md), [releases](https://github.com/ilgala/laravel-wubook/releases), [license](LICENSE), and [contribution guidelines](CONTRIBUTING.md). In order to use the API you have to request a provider key by sending an E-Mail at devel@wubook.net, in order to connect your WuBook account, and you'll be free to try all its features. 
 
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![Software License][ico-license]](LICENSE.md)
+[![StyleCI][ico-style]](link-style)
 [![Build Status][ico-travis]][link-travis]
 [![Coverage Status][ico-scrutinizer]][link-scrutinizer]
 [![Quality Score][ico-code-quality]][link-code-quality]
@@ -178,11 +179,11 @@ WuBook::rooms()->fetch_rooms(1)                 // See http://tdocs.wubook.net/w
     0 => [
         id => 123,
         name => 'room',
-        shortname: 'ro',
-        occupancy: 2,
-        men: 2,
-        children: 0,
-        subroom: 0,
+        shortname => 'ro',
+        occupancy => 2,
+        men => 2,
+        children => 0,
+        subroom => 0,
         // ...
     ],
     1 => [
@@ -231,14 +232,14 @@ Laravel WuBook is licensed under [The MIT License (MIT)](LICENSE).
 
 [ico-version]: https://img.shields.io/packagist/v/ilgala/laravel-wubook.svg?style=flat-square
 [ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
-[ico-style]: https://styleci.io/repos/78115500/shield?branch=master
+[ico-style]: https://styleci.io/repos/86339392/shield?branch=master
 [ico-travis]: https://img.shields.io/travis/ilgala/laravel-wubook/master.svg?style=flat-square
 [ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/ilgala/laravel-wubook.svg?style=flat-square
 [ico-code-quality]: https://img.shields.io/scrutinizer/g/ilgala/laravel-wubook.svg?style=flat-square
 [ico-downloads]: https://img.shields.io/packagist/dt/ilgala/laravel-wubook.svg?style=flat-square
 
 [link-packagist]: https://packagist.org/packages/ilgala/laravel-wubook
-[link-style]: https://styleci.io/repos/78115500
+[link-style]: https://styleci.io/repos/86339392
 [link-travis]: https://travis-ci.org/ilgala/laravel-wubook
 [link-scrutinizer]: https://scrutinizer-ci.com/g/ilgala/laravel-wubook/code-structure
 [link-code-quality]: https://scrutinizer-ci.com/g/ilgala/laravel-wubook
