@@ -152,5 +152,4 @@ class WuBookReservations extends WuBookApi
     {
         return $this->call_method($this->token, 'new_reservation', $data);
     }
-
 }

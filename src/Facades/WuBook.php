@@ -30,5 +30,4 @@ class WuBook extends Facade
     {
         return 'wubook';
     }
-
 }

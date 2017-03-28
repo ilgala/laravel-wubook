@@ -78,5 +78,4 @@ class WuBookAvailability extends WuBookApi
 
         return $this->call_method($this->token, 'fetch_rooms_values', $data);
     }
-
 }

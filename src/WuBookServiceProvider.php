@@ -76,5 +76,4 @@ class WuBookServiceProvider extends ServiceProvider
             'wubook',
         ];
     }
-
 }

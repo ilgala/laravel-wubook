@@ -117,5 +117,4 @@ class WuBookRestrictions extends WuBookApi
     {
         return $this->call_method($this->token, 'rplan_get_rplan_values', [$dfrom, $dto, $rpids]);
     }
-
 }

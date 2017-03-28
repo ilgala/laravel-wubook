@@ -128,5 +128,4 @@ class WuBookRooms extends WuBookApi
     {
         return $this->call_method($this->token, 'push_update_url');
     }
-
 }
