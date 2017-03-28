@@ -1,17 +1,19 @@
 {
-    "name": "IlGala/laravel-wubook",
+    "name": "ilgala/laravel-wubook",
     "type": "library",
     "description": "A WuBook bridge for Laravel 5.x http://wubook.net",
     "keywords": [
         "IlGala",
-        "laravel-wubook"
+        "laravel-wubook",
+        "laravel-package",
+        "WuBook"
     ],
-    "homepage": "https://github.com/IlGala/laravel-wubook",
+    "homepage": "https://github.com/ilgala/laravel-wubook",
     "license": "MIT",
     "authors": [
         {
             "name": "Filippo Galante",
-            "email": "galante.filippo@b-ground.com",
+            "email": "filippo.galante@b-ground.com",
             "homepage": "http://www.b-ground.com",
             "role": "Developer"
         }
@@ -31,12 +33,12 @@
     },
     "autoload": {
         "psr-4": {
-            "IlGala\\LaravelWubook\\": "src"
+            "ilgala\\LaravelWubook\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "IlGala\\LaravelWubook\\": "tests"
+            "ilgala\\LaravelWubook\\": "tests"
         }
     },
     "scripts": {

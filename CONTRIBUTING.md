@@ -25,7 +25,7 @@ We accept contributions via Pull Requests on [Github](https://github.com/IlGala/
 ## Running Tests
 
 ``` bash
-$ composer test
+#TO DO
 ```
 
 

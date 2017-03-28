@@ -12,14 +12,13 @@
 namespace IlGala\LaravelWubook\Api;
 
 use IlGala\LaravelWubook\Api\WuBookApi;
-use IlGala\LaravelWubook\Exceptions\WuBookException;
 
 /**
  * This is the WuBook rooms api class.
  *
  * @author Filippo Galante <filippo.galante@b-ground.com>
  */
-class WuBookAvailability
+class WuBookAvailability extends WuBookApi
 {
 
     /**
@@ -38,33 +37,32 @@ class WuBookAvailability
     }
 
     /**
-     * http://tdocs.wubook.net/wired/avail.html#updating-availability
+     * http://tdocs.wubook.net/wired/avail.html#update_avail
+     * http://tdocs.wubook.net/wired/avail.html#update_sparse_avail
      *
      * if dfrom param is not set the update_sparse_avail method will be called, update_avail method otherwise
      *
      * @param array $rooms
      * @param string $dfrom
-     * @return type
+     * @return mixed
      */
     public function update_avail($rooms, $dfrom = null)
     {
         if (empty($dfrom)) {
-            $response = $this->call_method($this->token, 'update_sparse_avail', [$rooms]);
+            return $this->call_method($this->token, 'update_sparse_avail', [$rooms]);
         } else {
-            $response = $this->call_method($this->token, 'update_avail', [$dfrom, $rooms]);
+            return $this->call_method($this->token, 'update_avail', [$dfrom, $rooms]);
         }
-
-        return $response['has_error'] ? $response : $response['data'];
     }
 
     /**
-     * http://tdocs.wubook.net/wired/avail.html#updating-availability
+     * http://tdocs.wubook.net/wired/avail.html#fetch_rooms_values
      *
      * if dfrom param is not set the update_sparse_avail method will be called, update_avail method otherwise
      *
      * @param array $rooms
      * @param string $dfrom
-     * @return type
+     * @return mixed
      */
     public function fetch_rooms_values($dfrom, $dto, $rooms = null)
     {
@@ -78,9 +76,7 @@ class WuBookAvailability
             array_push($data, $rooms);
         }
 
-        $response = $this->call_method($this->token, 'fetch_rooms_values', $data);
-
-        return $response['has_error'] ? $response : $response['data'];
+        return $this->call_method($this->token, 'fetch_rooms_values', $data);
     }
 
 }

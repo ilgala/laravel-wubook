@@ -42,7 +42,14 @@ abstract class WuBookApi
      */
     protected $auth;
 
-    public function __construct($config, $cache, $client)
+    /**
+     * Creates a new WuBookAuth instance.
+     *
+     * @param array $config
+     * @param Illuminate\Cache\Repository $cache
+     * @param fXmlRpc\Client $client
+     */
+    public function __construct($config, Repository $cache, Client $client)
     {
         $this->config = $config;
         $this->cache = $cache;
@@ -51,20 +58,25 @@ abstract class WuBookApi
     }
 
     /**
-     * Prepends token and lcode.
+     * Prepends token and lcode or custom parameters
+     *
+     * @param mixed $params
      */
-    protected function setup_client($token)
+    protected function setup_client($params)
     {
-        // Setup params
-        $params = [
-            $this->get_token($token),
-            $this->config['lcode']
-        ];
+        if (!is_array($params)) {
+            // Setup params
+            $params = [
+                $this->get_token($params),
+                $this->config['lcode']
+            ];
+        }
 
-        $this->client->prependParams($params);
+        $this->client->prependParams($token);
     }
 
     /**
+     * Validate and, if necessary, retrieves a token or the cached token
      *
      * @param string $token
      * @return string
@@ -91,8 +103,29 @@ abstract class WuBookApi
         }
     }
 
+    /**
+     * Calls a wired API function.
+     *
+     * @param string $token
+     * @param string $method
+     * @param array $data
+     * @return array
+     * @throws WuBookException
+     */
     protected function call_method($token, $method, $data = [])
     {
+        if ($this->config['cache_token']) {
+            // Check total operations
+            $operations = $this->cache->get('wubook.token.ops');
+            $operations++;
+
+            if ($operations >= 60) {
+                // Exceeded max ops, renew token
+                $this->auth->release_token($this->get_token($token));
+                $this->auth->acquire_token();
+            }
+        }
+
         // Setup client
         $this->setup_client($token);
 
@@ -106,6 +139,11 @@ abstract class WuBookApi
             ];
         } catch (AbstractTransportException $error) {
             throw new WuBookException($error->getMessage(), $error->getCode(), $error);
+        } finally {
+            if ($this->config['cache_token']) {
+                // Increment total operations
+                $this->cache->increment('wubook.token.ops');
+            }
         }
     }
 

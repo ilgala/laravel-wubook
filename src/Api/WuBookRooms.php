@@ -12,7 +12,6 @@
 namespace IlGala\LaravelWubook\Api;
 
 use IlGala\LaravelWubook\Api\WuBookApi;
-use IlGala\LaravelWubook\Exceptions\WuBookException;
 
 /**
  * This is the WuBook rooms api class.
@@ -38,59 +37,53 @@ class WuBookRooms extends WuBookApi
     }
 
     /**
-     * http://tdocs.wubook.net/wired/rooms.html#fetching-existing-rooms
+     * http://tdocs.wubook.net/wired/rooms.html#fetch_rooms
      *
      * @param int $ancillary 0|1
-     * @return array
-     * @throws WuBookException
+     * @return mixed
      */
     public function fetch_rooms($ancillary = 0)
     {
-        $response = $this->call_method($this->token, 'fetch_rooms', [$ancillary]);
-
-        return $response['has_error'] ? $response : $response['data'];
+        return $this->call_method($this->token, 'fetch_rooms', [$ancillary]);
     }
 
     /**
-     * http://tdocs.wubook.net/wired/rooms.html#adding-a-new-room.
+     * http://tdocs.wubook.net/wired/rooms.html#new_room
+     * http://tdocs.wubook.net/wired/rooms.html#new_virtual_room
      *
      * @param array $data
-     * @return array
-     * @throws WuBookException
+     * @return mixed
      */
     public function new_room($data, $virtual = false)
     {
         if ($virtual) {
-            $response = $this->call_method($this->token, 'new_virtual_room', $data);
+            return $this->call_method($this->token, 'new_virtual_room', $data);
         } else {
-            $response = $this->call_method($this->token, 'new_room', $data);
+            return $this->call_method($this->token, 'new_room', $data);
         }
-
-        return $response['has_error'] ? $response : $response['data'];
     }
 
     /**
-     * http://tdocs.wubook.net/wired/rooms.html#modifying-a-room.
+     * http://tdocs.wubook.net/wired/rooms.html#mod_room
+     * http://tdocs.wubook.net/wired/rooms.html#mod_virtual_room
      *
      * The method will return a boolean only if response has no error.
      *
      * @param array $data
      * @param array|boolean $virtual
-     * @return type
+     * @return mixed
      */
     public function mod_room($data, $virtual = false)
     {
         if ($virtual) {
-            $response = $this->call_method($this->token, 'mod_virtual_room', $data);
+            return $this->call_method($this->token, 'mod_virtual_room', $data);
         } else {
-            $response = $this->call_method($this->token, 'mod_room', $data);
+            return $this->call_method($this->token, 'mod_room', $data);
         }
-
-        return $response['has_error'] ? $response : true;
     }
 
     /**
-     * http://tdocs.wubook.net/wired/rooms.html#removing-a-room
+     * http://tdocs.wubook.net/wired/rooms.html#del_room
      *
      * The method will return a boolean only if response has no error.
      *
@@ -99,26 +92,22 @@ class WuBookRooms extends WuBookApi
      */
     public function del_room($id)
     {
-        $response = $this->call_method($this->token, 'del_room', [$id]);
-
-        return $response['has_error'] ? $response : true;
+        return $this->call_method($this->token, 'del_room', [$id]);
     }
 
     /**
-     * http://tdocs.wubook.net/wired/rooms.html#other-functions
+     * http://tdocs.wubook.net/wired/rooms.html#room_images
      *
      * @param int $id
-     * @return array
+     * @return mixed
      */
     public function room_images($id)
     {
-        $response = $this->call_method($this->token, 'room_images', [$id]);
-
-        return $response['has_error'] ? $response : $response['data'];
+        return $this->call_method($this->token, 'room_images', [$id]);
     }
 
     /**
-     * http://tdocs.wubook.net/wired/rooms.html#update-functions
+     * http://tdocs.wubook.net/wired/rooms.html#push_update_activation
      *
      * The method will return a boolean only if response has no error.
      *
@@ -127,21 +116,17 @@ class WuBookRooms extends WuBookApi
      */
     public function push_update_activation($url)
     {
-        $response = $this->call_method($this->token, 'push_update_activation', [$url]);
-
-        return $response['has_error'] ? $response : true;
+        return $this->call_method($this->token, 'push_update_activation', [$url]);
     }
 
     /**
-     * http://tdocs.wubook.net/wired/rooms.html#update-functions
+     * http://tdocs.wubook.net/wired/rooms.html#push_update_url
      *
      * @return string
      */
     public function push_update_url()
     {
-        $response = $this->call_method($this->token, 'push_update_url');
-
-        return $response['has_error'] ? $response : $response['data'];
+        return $this->call_method($this->token, 'push_update_url');
     }
 
 }

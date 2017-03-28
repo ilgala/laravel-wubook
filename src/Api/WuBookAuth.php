@@ -85,9 +85,8 @@ class WuBookAuth
                 // Setup cache
                 if ($this->config['cache_token']) {
                     $this->cache->put('wubook.token', $token, $expires_at);
+                    $this->cache->put('wubook.token.ops', 0, $expires_at);
                 }
-
-                $this->cache->put('wubook.token.ops', 0, $expires_at);
 
                 return $token;
             } else {

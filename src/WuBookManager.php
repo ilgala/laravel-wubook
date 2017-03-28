@@ -18,14 +18,22 @@ use Illuminate\Contracts\Config\Repository;
 use IlGala\LaravelWubook\Exceptions\WuBookException;
 use IlGala\LaravelWubook\Api\WuBookAuth;
 use IlGala\LaravelWubook\Api\WuBookAvailability;
+use IlGala\LaravelWubook\Api\WuBookCancellationPolicies;
+use IlGala\LaravelWubook\Api\WuBookChannelManager;
+use IlGala\LaravelWubook\Api\WuBookCorporate;
+use IlGala\LaravelWubook\Api\WuBookExtras;
+use IlGala\LaravelWubook\Api\WuBookPrices;
+use IlGala\LaravelWubook\Api\WuBookReservations;
+use IlGala\LaravelWubook\Api\WuBookRestrictions;
 use IlGala\LaravelWubook\Api\WuBookRooms;
+use IlGala\LaravelWubook\Api\WuBookTransactions;
 
 /**
  * This is the WuBook manager class.
  *
  * @author Filippo Galante <filippo.galante@b-ground.com>
  */
-class WuBook
+class WuBookManager
 {
 
     /**
@@ -70,7 +78,7 @@ class WuBook
     /**
      * Auth API
      *
-     * @return WuBookAuth
+     * @return IlGala\LaravelWubook\Api\WuBookAuth
      */
     public function auth()
     {
@@ -80,6 +88,12 @@ class WuBook
         return new WuBookAuth($this->config, $this->cache, $client);
     }
 
+    /**
+     * Availability API
+     *
+     * @param string $token
+     * @return IlGala\LaravelWubook\Api\WuBookAvailability
+     */
     public function availability($token = null)
     {
         // Setup client
@@ -88,45 +102,108 @@ class WuBook
         return new WuBookAvailability($this->config, $this->cache, $client, $token);
     }
 
+    /**
+     * Cancellation polices API
+     *
+     * @param string $token
+     * @return IlGala\LaravelWubook\Api\WuBookCancellationPolicies
+     */
     public function cancellation_policies($token = null)
     {
+        $client = new Client(self::ENDPOINT, null, new NativeParser(), new NativeSerializer());
 
+        return new WuBookCancellationPolicies($this->config, $this->cache, $client, $token);
     }
 
+    /**
+     * Channel manager API
+     *
+     * @param string $token
+     * @return IlGala\LaravelWubook\Api\WuBookChannelManager
+     */
     public function channel_manager($token = null)
     {
+        // Setup client
+        $client = new Client(self::ENDPOINT, null, new NativeParser(), new NativeSerializer());
 
+        return new WuBookChannelManager($this->config, $this->cache, $client, $token);
     }
 
+    /**
+     * Corporate function API
+     *
+     * @param string $token
+     * @return IlGala\LaravelWubook\Api\WuBookCorporate
+     */
     public function corporate_functions($token = null)
     {
+        // Setup client
+        $client = new Client(self::ENDPOINT, null, new NativeParser(), new NativeSerializer());
 
+        return new WuBookCorporate($this->config, $this->cache, $client, $token);
     }
 
+    /**
+     * Extra functions API
+     *
+     * @param string $token
+     * @return IlGala\LaravelWubook\Api\WuBookExtras
+     */
     public function extras($token = null)
     {
+        // Setup client
+        $client = new Client(self::ENDPOINT, null, new NativeParser(), new NativeSerializer());
 
+        return new WuBookExtras($this->config, $this->cache, $client, $token);
     }
 
+    /**
+     * Prices API
+     *
+     * @param string $token
+     * @return IlGala\LaravelWubook\Api\WuBookPrices
+     */
     public function prices($token = null)
     {
+        // Setup client
+        $client = new Client(self::ENDPOINT, null, new NativeParser(), new NativeSerializer());
 
+        return new WuBookPrices($this->config, $this->cache, $client, $token);
     }
 
+    /**
+     * Reservations API
+     *
+     * @param string $token
+     * @return IlGala\LaravelWubook\Api\WuBookPrices
+     */
     public function reservations($token = null)
     {
+        // Setup client
+        $client = new Client(self::ENDPOINT, null, new NativeParser(), new NativeSerializer());
 
+        return new WuBookReservations($this->config, $this->cache, $client, $token);
     }
 
+    /**
+     * Restrictions API
+     *
+     * @param string $token
+     * @return IlGala\LaravelWubook\Api\WuBookRestrictions
+     */
     public function restrictions($token = null)
     {
+        // Setup client
+        $client = new Client(self::ENDPOINT, null, new NativeParser(), new NativeSerializer());
 
+        return new WuBookRestrictions($this->config, $this->cache, $client, $token);
     }
 
     /**
      * Rooms API
      *
-     * @return WuBookAuth
+     * @param string $token
+     * @return IlGala\LaravelWubook\Api\WuBookRooms
      */
     public function rooms($token = null)
     {
@@ -136,9 +213,18 @@ class WuBook
         return new WuBookRooms($this->config, $this->cache, $client, $token);
     }
 
+    /**
+     * Transactions API
+     *
+     * @param string $token
+     * @return IlGala\LaravelWubook\Api\WuBookTransactions
+     */
     public function transactions($token = null)
     {
+        // Setup client
+        $client = new Client(self::ENDPOINT, null, new NativeParser(), new NativeSerializer());
 
+        return new WuBookTransactions($this->config, $this->cache, $client, $token);
     }
 
     /**
