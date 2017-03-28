@@ -17,7 +17,7 @@ use Illuminate\Support\ServiceProvider;
 use Laravel\Lumen\Application as LumenApplication;
 
 /**
- * This is the SMSFactor service provider class.
+ * This is the WuBook service provider class.
  *
  * @author Filippo Galante <filippo.galante@b-ground.com>
  */
@@ -59,10 +59,10 @@ class WuBookServiceProvider extends ServiceProvider
     {
         $this->app->singleton('wubook', function (Container $app) {
             $config = $app['config'];
-            return new WuBook($config);
+            return new WuBookManager($config);
         });
 
-        $this->app->alias('wubook', WuBook::class);
+        $this->app->alias('wubook', WuBookManager::class);
     }
 
     /**

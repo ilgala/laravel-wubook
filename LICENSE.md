@@ -1,6 +1,6 @@
 # The MIT License (MIT)
 
-Copyright (c) 2017 Filippo Galante <galante.filippo@b-ground.com>
+Copyright (c) 2017 Filippo Galante <filippo.galante@b-ground.com>
 
 > Permission is hereby granted, free of charge, to any person obtaining a copy
 > of this software and associated documentation files (the "Software"), to deal

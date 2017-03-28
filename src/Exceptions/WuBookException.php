@@ -12,9 +12,9 @@
 namespace IlGala\LaravelWubook\Exceptions;
 
 /**
- * Description of WuBookException
+ * This is the WuBookException class.
  *
- * @author ilgala
+ * @author Filippo Galante <filippo.galante@b-ground.com>
  */
 class WuBookException extends \RuntimeException
 {
